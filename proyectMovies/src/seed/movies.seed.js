@@ -1,3 +1,9 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const Movie = require('../api/models/movie.model');
+dotenv.config();
+
 const movies = [
     {
         id: 1,
@@ -42,3 +48,22 @@ const movies = [
         genre: 'Comedia romántica',
     },
 ];
+
+mongoose
+    .connect(process.env.DB_URL)
+    .then(async () => {
+        const allMovies = await Movie.find();
+        if (allMovies.length > 0) {
+            await Movie.collection.drop();
+            console.log('deleted movies');
+        }
+    })
+    .catch((error) => console.log(`error borrando alumnos ${error}`))
+    .then(async () => {
+        const moviesMap = movies.map((movie) => new Movie(movie));
+        await Movie.insertMany(moviesMap);
+        console.log('inserted movies');
+    })
+
+    .catch((error) => console.log(`error creating movies ${error}`))
+    .finally(() => mongoose.disconnect());
