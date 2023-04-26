@@ -9,6 +9,9 @@ const movieSchema = new Schema(
         genre: { type: String, required: true },
     },
     {
+        timestamp: true,
+    },
+    {
         collection: 'movie',
     }
 );
