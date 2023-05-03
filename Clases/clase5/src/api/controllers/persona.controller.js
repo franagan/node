@@ -10,6 +10,16 @@ const getAllPersonas = async (req, res) => {
     }
 };
 
+const getPersonById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const persona = await persona
+            .findById(id)
+            .populate({ path: 'productos', select: '_id nombre precio' });
+        return res(200).json(persona);
+    } catch (error) {}
+};
+
 const setNewPersona = async (req, res) => {
     try {
         // const newObject = {};
@@ -97,4 +107,5 @@ module.exports = {
     deletePersona,
     filterByCity,
     filterByName,
+    getPersonById,
 };

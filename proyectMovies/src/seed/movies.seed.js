@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const Movie = require('../api/models/movie.model');
+const Movies = require('../api/models/movie.model');
 dotenv.config();
 
 const movies = [
@@ -52,16 +52,16 @@ const movies = [
 mongoose
     .connect(process.env.DB_URL)
     .then(async () => {
-        const allMovies = await Movie.find();
+        const allMovies = await Movies.find();
         if (allMovies.length > 0) {
-            await Movie.collection.drop();
+            await Movies.collection.drop();
             console.log('deleted movies');
         }
     })
     .catch((error) => console.log(`error borrando alumnos ${error}`))
     .then(async () => {
-        const moviesMap = movies.map((movie) => new Movie(movie));
-        await Movie.insertMany(moviesMap);
+        const moviesMap = movies.map((movies) => new Movies(movies));
+        await Movies.insertMany(moviesMap);
         console.log('inserted movies');
     })
 

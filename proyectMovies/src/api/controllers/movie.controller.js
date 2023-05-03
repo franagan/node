@@ -12,63 +12,65 @@ const getAllMovies = async (req, res) => {
 
 const getMovieId = async (req, res) => {
     try {
-        // console.log(req.query);
-        let { idSearch } = req.query;
-        const movieId = await Movie.find({ _id: idSearch });
+        console.log(req.params);
+        let { id } = req.params;
+        console.log(id);
+        const movieId = await Movie.findById(id);
         if (!movieId) {
             return res.status(404).json({ mensaje: 'id no encontrada' });
         }
         return res.status(200).json(movieId);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json(error);
     }
 };
 
 const getMovieTitle = async (req, res) => {
     try {
-        console.log(req.query);
-        let { titleSearch } = req.query;
+        console.log(req.params);
+        let { title } = req.params;
+        console.log(title);
         const movieTitle = await Movie.find({
-            title: titleSearch.toLowerCase(),
+            title: title,
         });
         if (!movieTitle) {
             return res.status(404).json({ mensaje: 'Title no encontrado' });
         }
         return res.status(200).json(movieTitle);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json(error);
     }
 };
 
 const getMovieGenre = async (req, res) => {
     try {
         console.log(req.query);
-        let { genreSearch } = req.query;
+        let { genre } = req.query;
         const movieGenre = await Movie.find({
-            genre: genreSearch,
+            genre: genre,
         });
         if (!movieGenre) {
             return res.status(404).json({ mensaje: 'genero no encontrado' });
         }
         return res.status(200).json(movieGenre);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json(error);
     }
 };
 
 const getMovieYear = async (req, res) => {
     try {
-        let { yearSearch } = req.query;
-        console.log(yearSearch);
+        let { year } = req.params;
+        console.log(year);
         const movieYear = await Movie.find({
-            year: { $gt: yearSearch },
+            year: { $gt: year },
         });
         if (!movieYear) {
             return res.status(404).json('no year');
         }
         return res.status(200).json(movieYear);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json(error);
     }
 };
 

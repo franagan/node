@@ -13,13 +13,13 @@ const {
     deleteMovie,
 } = require('../controllers/movie.controller');
 
-router.get('/movies', getAllMovies);
-router.post('/', setNewMovie);
-router.get('/id', getMovieId);
-router.get('/title', getMovieTitle);
+router.get('/title/:title', getMovieTitle);
 router.get('/genre', getMovieGenre);
-router.get('/year', getMovieYear);
+router.get('/year/:year', getMovieYear);
 router.put('/:id', modMovie);
 router.delete('/:id', deleteMovie);
+router.get('/movies', getAllMovies);
+router.get('/:id', getMovieId);
+router.post('/', setNewMovie);
 
 module.exports = router;

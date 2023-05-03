@@ -1,16 +1,17 @@
 const express = require('express');
+const dotenv = require('dotenv');
 const cors = require('cors');
 const { connect } = require('./src/utils/database');
-const routerPersona = require('./src/api/routes/persona.routes');
+const userRoutes = require('./src/api/routes/user.routes');
 
+dotenv.config();
 const app = express();
 app.use(cors());
 connect();
 app.use(express.json());
-const PORT = 3000;
+const PORT = process.env.PORT || 5000;
 
-app.use('/persona', routerPersona);
-
+app.use('/user', userRoutes);
 app.listen(PORT, () => {
     console.log(`Url del servidor : http://localhost:${PORT}`);
 });

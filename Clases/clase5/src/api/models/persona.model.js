@@ -6,9 +6,10 @@ const personaSchema = new Schema(
     {
         name: { type: String, require: true },
         lastName: { type: String, require: true },
-        email: { type: String, require: true },
-        city: { type: String, require: false },
-        phone: { type: Number, require: false },
+        email: { type: String, required: true },
+        city: { type: String, required: false },
+        phone: { type: Number, required: false },
+        productos: [{ type: Schema.Types.ObjectId, ref: 'producto' }],
     },
     {
         collection: 'persona',

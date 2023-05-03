@@ -9,6 +9,7 @@ const {
     deletePersona,
     filterByCity,
     filterByName,
+    getPersonById,
 } = require('../controllers/persona.controller');
 
 const { postAllPersonas } = require('../controllers/persona.controller');
@@ -24,5 +25,7 @@ router.delete('/:id', deletePersona);
 router.get('/city', filterByCity);
 
 router.get('/filterName', filterByName);
+
+router.get('/:id', getPersonById);
 
 module.exports = router;
