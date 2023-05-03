@@ -5,6 +5,7 @@ dotenv.config();
 const { connect } = require('./src/utils/database');
 const routerMovie = require('./src/api/routes/movie.routes');
 const routerCinema = require('./src/api/routes/cinema.routes');
+const routerUser = require('./src/api/routes/user.routes');
 
 const app = express();
 app.use(cors());
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.use('/movie', routerMovie);
 app.use('/cinema', routerCinema);
+app.use('/user', routerUser);
 
 app.listen(PORT, () => {
     console.log(

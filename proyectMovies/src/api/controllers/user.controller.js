@@ -21,7 +21,9 @@ const login = async (req, res) => {
         }
         const token = generateSign(userInfo.id, userInfo.email);
         console.log(token);
-        return res.status(200).json({ token, userInfo });
+        return res
+            .status(200)
+            .json({ token, userInfo, message: 'ha iniciado sesion' });
     } catch (error) {
         res.status(400).json(error);
     }
@@ -29,13 +31,24 @@ const login = async (req, res) => {
 const register = async (req, res) => {
     try {
         const newUser = new User(req.body);
+
         if (!validatePassword(newUser.password)) {
-            return res.status(400).json({ message: 'contraseña inconrrecta' });
+            return res.status(400).json({ message: 'contraseña incorrecta' });
         }
         if (!validateEmail(newUser.email)) {
             return res.status(400).json({ message: 'email incorrecto' });
         }
-    } catch (error) {}
+        if ((await usedEmail(newUser.email)) > 0) {
+            return res
+                .status(400)
+                .json({ message: 'el email ya esta registrado' });
+        }
+        newUser.password = bcrypt.hashSync(newUser.password, 10);
+        const createdUser = await newUser.save();
+        return res.status(200).json(createdUser);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
 };
 
 module.exports = { login, register };

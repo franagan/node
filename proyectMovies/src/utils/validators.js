@@ -1,7 +1,8 @@
 const User = require('../api/models/user.model');
 
 const validatePassword = (pass) => {
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const regex =
+        /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/;
     return regex.test(pass);
 };
 
@@ -12,7 +13,7 @@ const validateEmail = (email) => {
 };
 
 const usedEmail = async (email) => {
-    const users = User.find({ email: email });
+    const users = await User.find({ email: email });
     return users.length;
 };
 
